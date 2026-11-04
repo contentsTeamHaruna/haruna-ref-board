@@ -477,7 +477,7 @@ function fbName(r,ext){const cl=s=>String(s||'').replace(/ 페이지는.*$/,'').
 function wrapLines(ctx,text,maxW){const out=[];String(text||'').split('\n').forEach(par=>{let line='';[...par].forEach(ch=>{const tl=line+ch;if(ctx.measureText(tl).width>maxW&&line){out.push(line);line=ch.trimStart()}else line=tl});if(line)out.push(line)});return out}
 async function feedbackRender(rid){const r=R.find(x=>x.id===rid);const S=seq(rid);if(!S.length){alert('컷을 고른 줄이 없습니다. 줄마다 컷을 넣은 뒤 눌러 주세요');return}
  const W=720,H=1280;const cv=document.createElement('canvas');cv.width=W;cv.height=H;const ctx=cv.getContext('2d');
- const ov=document.getElementById('fbov');const msg=ov.querySelector('.fbm');ov.style.display='flex';
+ const ov=document.getElementById('fbov');const msg=ov.querySelector('.fbm');ov.style.display=FBV?'none':'flex';
  const v=document.createElement('video');v.muted=true;v.playsInline=true;v.preload='auto';v.style.cssText='position:fixed;left:0;top:0;width:180px;height:160px;opacity:0.01;pointer-events:none;z-index:-1';document.body.appendChild(v);
  const mimes=['video/mp4;codecs=avc1.42E01E','video/mp4','video/webm;codecs=vp9','video/webm'];const mime=mimes.find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported(m));
  if(!mime){ov.style.display='none';alert('이 브라우저는 녹화를 지원하지 않습니다. 크롬에서 열어 주세요');return}
@@ -489,8 +489,9 @@ async function feedbackRender(rid){const r=R.find(x=>x.id===rid);const S=seq(rid
   ctx.drawImage(fc,0,0);
   ctx.font='600 22px -apple-system,"Apple SD Gothic Neo",sans-serif';ctx.fillStyle='rgba(0,0,0,.55)';const head=`피드백 초안 · 레퍼 ${r.n} · C${String(idx+1).padStart(2,'0')}/${S.length}`;const hw=ctx.measureText(head).width;ctx.beginPath();ctx.roundRect(20,20,hw+28,40,10);ctx.fill();ctx.fillStyle='#fff';ctx.fillText(head,34,48);
   if(cap){ctx.font='700 40px -apple-system,"Apple SD Gothic Neo",sans-serif';const ls=wrapLines(ctx,cap,W-120);const lh=54,bh=lh*ls.length+36,y0=Math.round(H*0.64);ctx.fillStyle='rgba(0,0,0,.92)';ctx.beginPath();ctx.roundRect(30,y0,W-60,bh,16);ctx.fill();ctx.fillStyle='#fff';ctx.textAlign='center';ls.forEach((l,k)=>ctx.fillText(l,W/2,y0+18+lh*(k+1)-14));ctx.textAlign='left'}
-  if(!stop)requestAnimationFrame(draw)};
+  if(FBV){FBV.getContext('2d').drawImage(cv,0,0,FBV.width,FBV.height)}};
  const once=(ev)=>new Promise(res=>v.addEventListener(ev,res,{once:true}));
+ const tk=new Worker(URL.createObjectURL(new Blob(['setInterval(()=>postMessage(0),33)'],{type:'text/javascript'})));tk.onmessage=()=>{if(!stop)draw()};
  rec.start(250);draw();
  try{for(idx=0;idx<S.length;idx++){const x=S[idx];const c=CLIP[x.cut];msg.textContent=`초안 녹화 중 · ${idx+1}/${S.length}컷 · 창을 닫지 마세요`;
    const url=c.src==='batch'?`전처리/batch/${c.fb}.mp4`:`구도/clips/${c.id}.mp4`;const st=c.src==='batch'?c.start:0;
@@ -498,9 +499,9 @@ async function feedbackRender(rid){const r=R.find(x=>x.id===rid);const S=seq(rid
    seeking=true;v.pause();v.currentTime=st;await once('seeked');cur=c;cap=x.tx;await v.play().catch(()=>{});await new Promise(res=>{const t0=performance.now();const chk=(now,md)=>{if((md&&md.mediaTime>=st-0.04&&md.mediaTime<=st+1)||performance.now()-t0>1500)res();else v.requestVideoFrameCallback(chk)};v.requestVideoFrameCallback?v.requestVideoFrameCallback(chk):setTimeout(res,200)});seeking=false;
    const run=Math.min(x.dur,c.dur);await new Promise(res=>setTimeout(res,run*1000));v.pause();if(x.dur>run)await new Promise(res=>setTimeout(res,(x.dur-run)*1000))}}
  catch(e){console.error(e)}
- await new Promise(res=>setTimeout(res,300));stop=true;await new Promise(res=>{rec.onstop=res;rec.stop()});
+ await new Promise(res=>setTimeout(res,300));stop=true;tk.terminate();await new Promise(res=>{rec.onstop=res;rec.stop()});
  const ext=mime.startsWith('video/mp4')?'mp4':'webm';v.remove();const blob=new Blob(chunks,{type:mime.split(';')[0]});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=fbName(r,ext);a.click();
- msg.textContent=`완료 · ${a.download}`;setTimeout(()=>{ov.style.display='none'},2500)}
+ msg.textContent=`완료 · ${a.download}`;if(FBV){document.title='완료 · 피드백 초안';setTimeout(()=>window.close(),4000)}else setTimeout(()=>{ov.style.display='none'},2500)}
 function saveCM(){localStorage.setItem(CKEY,JSON.stringify(CM))}
 function redrawBoard(rid){const d=document.querySelector(`.drop[data-rid="${rid}"]`);if(d)d.innerHTML=boardHtml(rid);const c=document.querySelector(`#list article .cmpbar button[data-cmp="${rid}"]`);if(c)c.nextElementSibling.textContent=(CM[rid]||[]).length?`내 구성 ${(CM[rid]||[]).length}줄`:'문장을 끌어와 새 구성을 짭니다';saveCM()}
 function cmpText(rid){return (CM[rid]||[]).map(p=>`[${p.lab}]${p.mode?' '+p.mode+':':''} ${p.tx}`).join('\n')}
@@ -533,7 +534,7 @@ document.addEventListener('click',e=>{const t=e.target;let h=null;
   else if(t.dataset.cclr){const P=PICK[t.dataset.cclr];delete CM[t.dataset.cclr][P.i].cut;saveCM();h=1}
   else if(t.dataset.cauto){autoCuts(t.dataset.cauto);saveCM();h=1}
   else if(t.dataset.cplay){playDraft(t.dataset.cplay);return}
-  else if(t.dataset.cfb){feedbackRender(t.dataset.cfb);return}
+  else if(t.dataset.cfb){saveCM();const w=380,h=720;const pw=window.open(location.pathname+location.search+'#fb='+t.dataset.cfb,'fbrec_'+t.dataset.cfb,`popup,width=${w},height=${h},left=${screen.availWidth-w-20},top=${screen.availHeight-h-20}`);if(!pw)alert('팝업이 막혔습니다. 주소창 오른쪽 팝업 차단 아이콘에서 허용해 주세요');return}
   else if(t.dataset.csave){saveEdit(t.dataset.csave);return}
   else if(t.dataset.copy){navigator.clipboard.writeText(cmpText(t.dataset.copy)).then(()=>{t.textContent='복사 완료';setTimeout(()=>t.textContent='텍스트 복사',1200)});return}
   else if(t.dataset.reset){if(confirm('이 레퍼의 내 구성을 비울까요?')){delete CM[t.dataset.reset];redrawBoard(t.dataset.reset)}return}
@@ -670,7 +671,9 @@ document.addEventListener('click',e=>{const t=e.target;if(t.classList&&t.classLi
  if(t.closest&&t.closest('.lbs')){e.stopImmediatePropagation();if(!t.closest('a'))e.preventDefault()}},true);
 sort.addEventListener('change',e=>{F.sort=e.target.value;render();document.getElementById('lsw').scrollTop=0});
 (()=>{const o=sort.querySelector('option[value="eng"]');if(!R.some(r=>r.eng)){o.disabled=true;o.textContent='인게이지먼트 높은 순 · 측정값 없음'}})();
-render();
+let FBV=null;
+if(location.hash.startsWith('#fb=')){const rid=decodeURIComponent(location.hash.slice(4));document.title='피드백 초안 녹화 중';document.body.innerHTML='<div style="position:fixed;inset:0;background:#111;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;font:13px -apple-system,sans-serif"><canvas id="fbv" width="270" height="480" style="border-radius:10px;background:#000"></canvas><div class="fbm" style="text-align:center;padding:0 16px">초안 녹화 준비 중</div><div style="opacity:.6;font-size:11.5px;text-align:center;padding:0 16px">이 작은 창은 다른 창에 가리지 않게 두세요. 메인 보드는 계속 쓰셔도 됩니다</div></div><div id="fbov" style="display:none"><div class="fbm"></div></div>';FBV=document.getElementById('fbv');const m1=document.querySelector('.fbm'),ov=document.getElementById('fbov');new MutationObserver(()=>{m1.textContent=ov.querySelector('.fbm').textContent}).observe(ov,{childList:true,subtree:true,characterData:true});feedbackRender(rid)}
+else render();
 </script>
 </body>
 </html>
