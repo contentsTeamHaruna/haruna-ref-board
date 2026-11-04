@@ -528,14 +528,14 @@ function rowItem(r){const s=st[r.id]||'';return `<div class="it ${SEL===r.id?'se
  <div class="tx"><div class="t0">${srcLine(r,1)}</div><div class="t1"><b>${esc(r.who.replace(/ 페이지는.*$/,''))}</b><small>${esc(String(r.n))}</small></div>
  <div class="t2">${hl(r.hook)}</div>
  <div class="t3"><span class="chipm">${esc(r.kind)}</span><span class="chipm">${esc(r.cat)}</span>${r.pre||r.pb?'<span class="chipm k">전처리</span>':''}${s==='1'||s==='2'?`<span class="chipm">${s}번 채택</span>`:''}</div></div></div>`}
-function tabsFor(r){const T=[['ref','레퍼런스'],['copy','문안 비교'],['cmp','구성 편집']];if(r.pre||r.pb)T.push(['pre','전처리']);return T}
+function tabsFor(r){const T=[['ref','레퍼런스'],['cmp','구성 편집']];if(r.pre||r.pb)T.push(['pre','전처리']);return T}
 function detail(r){if(!r)return '<div class="empty">왼쪽 목록에서 레퍼를 고르세요</div>';const s=st[r.id]||'';
  const T=tabsFor(r);if(!T.some(x=>x[0]===TAB))TAB='ref';
  const bar=`<div class="dbar"><button class="tbtn nav" data-nav="-1" title="이전 (↑)">‹</button><button class="tbtn nav" data-nav="1" title="다음 (↓)">›</button>
   <span class="pos">${(()=>{const L=curList();return `${L.findIndex(x=>x.id===r.id)+1} / ${L.length}`})()}</span><div class="seg" id="tabs">${T.map(([k,n])=>`<button data-tab="${k}" class="${TAB===k?'on':''}">${n}</button>`).join('')}</div>
   ${TAB==='copy'?`<div class="seg" id="vmode">${[['both','나란히'],['1','1번'],['2','2번']].map(([k,n])=>`<button data-v="${k}" class="${F.v===k?'on':''}">${n}</button>`).join('')}</div>`:''}
   <div class="sp"></div>
-  ${TAB==='copy'?`<button class="tbtn ${s==='1'?'on':''}" data-id="${r.id}" data-s="1">1번 채택</button><button class="tbtn ${s==='2'?'on':''}" data-id="${r.id}" data-s="2">2번 채택</button>`:''}<div class="tlseg">${['go','hold','no'].map(k=>`<button data-tl="${k}" data-id="${r.id}" class="${TL[r.id]===k?'on '+k:''}"><i class="lt ${k}"></i>${TLN[k]}</button>`).join('')}</div></div>`;
+  ${TAB==='cmp'?`<button class="tbtn ${s==='1'?'on':''}" data-id="${r.id}" data-s="1">1번 채택</button><button class="tbtn ${s==='2'?'on':''}" data-id="${r.id}" data-s="2">2번 채택</button>`:''}<div class="tlseg">${['go','hold','no'].map(k=>`<button data-tl="${k}" data-id="${r.id}" class="${TL[r.id]===k?'on '+k:''}"><i class="lt ${k}"></i>${TLN[k]}</button>`).join('')}</div></div>`;
  const head=`<div class="dh">${r.img?`<img class="art zoom" data-rid="${r.id}" src="${r.img}" alt="">`:'<div class="art"></div>'}<div style="min-width:0">
   <div class="srcbar">${srcLine(r,0)}</div><div class="k">${esc(r.prod)} · ${esc(r.cat)} · ${esc(r.fmt)}</div><h2>${esc(r.who.replace(/ 페이지는.*$/,''))}</h2><p class="hk">「${hl(r.hook)}」</p>
   <div class="meta">${esc(r.days)} 게재 · ${esc(r.var)} · 시작 ${esc(r.start)} · 키워드 ${esc(r.kw)} · <a href="https://www.facebook.com/ads/library/?id=${r.id}" target="_blank">광고 라이브러리에서 보기</a></div>
