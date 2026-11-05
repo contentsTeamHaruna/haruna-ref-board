@@ -647,17 +647,15 @@ const CAST=[
  }
 ];const LOOKK='look261105';let LOOK=JSON.parse(localStorage.getItem(LOOKK)||'{}');
 function saveLook(){localStorage.setItem(LOOKK,JSON.stringify(LOOK))}
-function lookClips(r){const mine=REFOF[r.id]||r.id;const own=LIB.clips.filter(c=>c.ref===mine).sort((a,b)=>a.start-b.start);const used=(CM[r.id]||[]).map(p=>CLIP[p.cut]).filter(c=>c&&c.ref!==mine);return own.concat(used.filter((c,i)=>used.indexOf(c)===i))}
-function lookPick(r,k){const L=LOOK[r.id]||{};if(L[k+'Url'])return{url:L[k+'Url']};if(!L[k])return null;if(k==='cast'){const c=CAST.find(x=>x.id===L[k]);return c&&{img:c.img,name:c.name}}if(L[k]==='ref')return{img:r.img,name:'레퍼 대표 이미지'};const c=CLIP[L[k]];return c&&{img:`구도/thumbs/${c.id}.jpg`,name:`${c.id} · ${c.start.toFixed(1)}초`}}
+function lookPick(r,k){const L=LOOK[r.id]||{};if(L[k+'Url'])return{url:L[k+'Url']};if(!L[k]||k!=='cast')return null;if(k==='cast'){const c=CAST.find(x=>x.id===L[k]);return c&&{img:c.img,name:c.name}}return null}
 function lookCard(r,k,title){const P=lookPick(r,k);let m='<div class="lkemp">아직 고르지 않았습니다</div>';if(P&&P.url){const u=esc(P.url);m=`<div class="lklink"><img src="${u}" alt="" onerror="this.remove()"><a href="${u}" target="_blank" rel="noopener">외부 링크 열기</a></div>`}else if(P)m=`<img src="${esc(P.img)}" alt=""><p>${esc(P.name)}</p>`;return `<div class="lkcard"><h5>${title}</h5>${m}</div>`}
 function lookUrl(r,k,ph){const v=(LOOK[r.id]||{})[k+'Url']||'';return `<label class="lkurl">다른 레퍼런스 링크<input type="url" data-lku="${k}" data-rid="${r.id}" value="${esc(v)}" placeholder="${ph}">${v?`<button data-lkx="${k}" data-rid="${r.id}">링크 지우기</button>`:''}</label>`}
-function lookPanel(r){const L=LOOK[r.id]||{};const CL=lookClips(r);const tile=(k,v,img,cap)=>`<button class="lkt ${L[k]===v&&!L[k+'Url']?'on':''}" data-lkk="${k}" data-lkv="${esc(v)}" data-rid="${r.id}"><img loading="lazy" src="${esc(img)}" alt=""><span>${esc(cap)}</span></button>`;
- const frames=k=>CL.length?CL.map(c=>tile(k,c.id,`구도/thumbs/${c.id}.jpg`,`${c.id} ${c.start.toFixed(1)}초`)).join(''):(r.img?tile(k,'ref',r.img,'레퍼 대표 이미지'):'<div class="lkemp">고를 장면이 없습니다. 링크를 넣어 주세요</div>');
+function lookPanel(r){const L=LOOK[r.id]||{};const tile=(k,v,img,cap)=>`<button class="lkt ${L[k]===v&&!L[k+'Url']?'on':''}" data-lkk="${k}" data-lkv="${esc(v)}" data-rid="${r.id}"><img loading="lazy" src="${esc(img)}" alt=""><span>${esc(cap)}</span></button>`;
  const P=CAST.filter(c=>c.pick),O=CAST.filter(c=>!c.pick);const cg=A=>A.map(c=>tile('cast',c.id,c.img,c.name)).join('');
  return `<div class="lk"><div class="lksum">${lookCard(r,'cast','캐릭터')}${lookCard(r,'wear','의상')}${lookCard(r,'place','장소')}</div>
  <section><h4>캐릭터 시트</h4><p class="lkh">하루나 캐스트 ${CAST.length}명에서 고릅니다. 앞쪽 ${P.length}명은 힉스필드 등록 후보입니다</p><div class="lkg cast">${cg(P)}${cg(O)}</div>${lookUrl(r,'cast','다른 인물 이미지 또는 게시물 주소')}</section>
- <section><h4>레퍼런스 의상</h4><p class="lkh">이 레퍼의 장면에서 의상이 잘 보이는 컷을 고릅니다</p><div class="lkg">${frames('wear')}</div>${lookUrl(r,'wear','다른 의상 이미지 또는 게시물 주소')}</section>
- <section><h4>레퍼런스 장소</h4><p class="lkh">이 레퍼의 장면에서 배경이 잘 보이는 컷을 고릅니다</p><div class="lkg">${frames('place')}</div>${lookUrl(r,'place','다른 장소 이미지 또는 게시물 주소')}</section></div>`}
+ <section><h4>레퍼런스 의상</h4>${lookUrl(r,'wear','다른 의상 이미지 또는 게시물 주소')}</section>
+ <section><h4>레퍼런스 장소</h4>${lookUrl(r,'place','다른 장소 이미지 또는 게시물 주소')}</section></div>`}
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-lkk],[data-lkx]');if(!t)return;const rid=t.dataset.rid;const L=LOOK[rid]=LOOK[rid]||{};if(t.dataset.lkx){delete L[t.dataset.lkx+'Url']}else{const k=t.dataset.lkk,v=t.dataset.lkv;delete L[k+'Url'];if(L[k]===v)delete L[k];else L[k]=v}saveLook();render()});
 document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.lku;if(!k)return;const rid=e.target.dataset.rid;const L=LOOK[rid]=LOOK[rid]||{};const v=e.target.value.trim();if(v)L[k+'Url']=v;else delete L[k+'Url'];saveLook();render()});
 function tabsFor(r){const T=[['ref','레퍼런스'],['cmp','구성 편집'],['look','캐릭터·의상·장소']];if(r.pre||r.pb)T.push(['pre','전처리']);return T}
