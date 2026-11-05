@@ -378,7 +378,7 @@ button[data-cplay]{background:var(--acc)!important;color:#fff!important;box-shad
 .hzb{background:#0a7d3c!important;color:#fff!important;top:auto!important;bottom:22px}.hzh{margin:4px 0 8px;font-size:13px}.hzv{margin-bottom:18px}
 .lk section{margin:26px 0 0}.lk h4{margin:0 0 3px;font-size:14px}.lkh{margin:0 0 10px;color:var(--mut,#777);font-size:12px}
 .lksum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.lkcard{background:rgba(0,0,0,.035);border-radius:10px;padding:10px 12px;min-height:150px}.lkcard h5{margin:0 0 8px;font-size:12px;color:var(--mut,#777);font-weight:600}.lkcard img{display:block;max-width:100%;max-height:220px;border-radius:6px}.lkcard p{margin:6px 0 0;font-size:12px}.lkemp{font-size:12px;color:var(--mut,#888)}.lklink a{display:inline-block;margin-top:6px;font-size:12px}
-.lkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.lkg.cast{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}.lkt{border:0;background:none;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0}.lkt img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;outline:2px solid transparent;outline-offset:1px;background:#ddd}.lkg.cast .lkt img{aspect-ratio:3/2;object-fit:cover}.lkt span{display:block;font-size:11px;margin-top:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.lkt.on img{outline-color:var(--accent,#0a84ff)}.lkt.on span{font-weight:600}
+.lkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.lkg.cast{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}.lkt{border:0;background:none;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0}.lkt img{object-position:top;display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;outline:2px solid transparent;outline-offset:1px;background:#ddd}.lkg.cast .lkt img{aspect-ratio:3/2;object-fit:cover}.lkt span{display:block;font-size:11px;margin-top:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.lkt.on img{outline-color:var(--accent,#0a84ff)}.lkt.on span{font-weight:600}
 .lkurl{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;white-space:nowrap}.lkurl input{flex:1;min-width:0;border:1px solid var(--line,#ddd);border-radius:6px;padding:5px 8px;font:inherit;background:#fff;color:var(--ink,#111)}.lkurl button{border:0;background:rgba(0,0,0,.06);border-radius:6px;padding:4px 8px;font:inherit;cursor:pointer}
 .lkact{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:12px}.lkal{color:var(--mut,#777)}.lkseg{display:inline-flex;background:rgba(0,0,0,.06);border-radius:7px;padding:2px}.lkseg button{border:0;background:transparent;border-radius:5px;padding:3px 9px;font:inherit;cursor:pointer;color:var(--ink,#111)}.lkseg button.on{background:#fff;box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.12)}.lkdesc{color:var(--mut,#777);flex:1;min-width:150px}.lkgo{border:0;background:var(--accent,#0a84ff);color:#fff;border-radius:6px;padding:5px 12px;font:inherit;font-weight:600;cursor:pointer}.lkgo:disabled{background:rgba(0,0,0,.1);color:#999;cursor:not-allowed}.lkgo.off{background:rgba(0,0,0,.08);color:var(--ink,#111);font-weight:400}.lkq{color:#0a7d3c;font-weight:600}.lkbox{background:rgba(0,0,0,.035);border-radius:10px;padding:12px 14px}.lkbox ul{margin:6px 0 10px;padding-left:16px;font-size:12px;word-break:break-all}
 .lkrow{display:flex;align-items:center;gap:8px;margin-top:10px;border-radius:8px;outline:2px dashed transparent;outline-offset:3px}.lkrow.over{outline-color:var(--accent,#0a84ff)}.lkrow .lkurl{flex:1;min-width:0;margin-top:0}.lkfile{flex:none;border:0;background:rgba(0,0,0,.06);border-radius:6px;padding:5px 10px;font:inherit;font-size:12px;cursor:pointer;color:var(--ink,#111)}.lkfile input{display:none}
@@ -636,30 +636,164 @@ const CAST=[
   "pick": 1
  },
  {
+  "id": "s1",
+  "name": "R1 긴 생머리",
+  "src": "쌩얼 정면",
+  "img": "캐스트/s1.jpg",
+  "pick": 1
+ },
+ {
+  "id": "s2",
+  "name": "R2 로우번",
+  "src": "쌩얼 정면",
+  "img": "캐스트/s2.jpg",
+  "pick": 1
+ },
+ {
+  "id": "s7",
+  "name": "R7 묶은 머리",
+  "src": "쌩얼 정면",
+  "img": "캐스트/s7.jpg",
+  "pick": 1
+ },
+ {
   "id": "b4",
   "name": "소아 단발",
   "src": "맨얼굴 3뷰",
   "img": "캐스트/b4.jpg",
   "pick": 0
  }
+];const LOOKS=[
+ {
+  "id": "r1_wear",
+  "kind": "wear",
+  "ref": "R1",
+  "name": "R1 회색 원피스·크림 스트라이프 셔츠",
+  "img": "의상장소/r1_wear.jpg"
+ },
+ {
+  "id": "r1_place",
+  "kind": "place",
+  "ref": "R1",
+  "name": "R1 테이블 방·대리석 욕실·미용실·복도",
+  "img": "의상장소/r1_place.jpg"
+ },
+ {
+  "id": "r2_wear",
+  "kind": "wear",
+  "ref": "R2",
+  "name": "R2 검정 V넥 탑·실버 후프",
+  "img": "의상장소/r2_wear.jpg"
+ },
+ {
+  "id": "r2_place",
+  "kind": "place",
+  "ref": "R2",
+  "name": "R2 검은 타일 욕실",
+  "img": "의상장소/r2_place.jpg"
+ },
+ {
+  "id": "r3_wear",
+  "kind": "wear",
+  "ref": "R3",
+  "name": "R3 차콜 후드집업·흰 가운",
+  "img": "의상장소/r3_wear.jpg"
+ },
+ {
+  "id": "r3_place",
+  "kind": "place",
+  "ref": "R3",
+  "name": "R3 편의점·욕실·서울 밤거리",
+  "img": "의상장소/r3_place.jpg"
+ },
+ {
+  "id": "r4_wear",
+  "kind": "wear",
+  "ref": "R4",
+  "name": "R4 회색 크롭탑·흰 홀터",
+  "img": "의상장소/r4_wear.jpg"
+ },
+ {
+  "id": "r4_place",
+  "kind": "place",
+  "ref": "R4",
+  "name": "R4 어두운 로프트",
+  "img": "의상장소/r4_place.jpg"
+ },
+ {
+  "id": "r5_wear",
+  "kind": "wear",
+  "ref": "R5",
+  "name": "R5 브라운 울 점퍼·에크루 팬츠",
+  "img": "의상장소/r5_wear.jpg"
+ },
+ {
+  "id": "r5_place",
+  "kind": "place",
+  "ref": "R5",
+  "name": "R5 유럽 광장·돌길 거리",
+  "img": "의상장소/r5_place.jpg"
+ },
+ {
+  "id": "r6_wear",
+  "kind": "wear",
+  "ref": "R6",
+  "name": "R6 핑크 가운·헤어 타월",
+  "img": "의상장소/r6_wear.jpg"
+ },
+ {
+  "id": "r6_place",
+  "kind": "place",
+  "ref": "R6",
+  "name": "R6 꽃무늬 벽지 욕실",
+  "img": "의상장소/r6_place.jpg"
+ },
+ {
+  "id": "r7_wear",
+  "kind": "wear",
+  "ref": "R7",
+  "name": "R7 하늘색 파자마·누드 슬립",
+  "img": "의상장소/r7_wear.jpg"
+ },
+ {
+  "id": "r7_place",
+  "kind": "place",
+  "ref": "R7",
+  "name": "R7 어두운 문가·침실",
+  "img": "의상장소/r7_place.jpg"
+ },
+ {
+  "id": "r8_wear",
+  "kind": "wear",
+  "ref": "R8",
+  "name": "R8 검정 홀터·흰 워치",
+  "img": "의상장소/r8_wear.jpg"
+ },
+ {
+  "id": "r8_place",
+  "kind": "place",
+  "ref": "R8",
+  "name": "R8 크림 패널 방",
+  "img": "의상장소/r8_place.jpg"
+ }
 ];const LOOKK='look261105';let LOOK=JSON.parse(localStorage.getItem(LOOKK)||'{}');
 function saveLook(){localStorage.setItem(LOOKK,JSON.stringify(LOOK))}
 function lkImg(rid,k){return localStorage.getItem(`lookimg_${rid}_${k}`)}
-function lookPick(r,k){const L=LOOK[r.id]||{};if(L[k+'Img']){const d=lkImg(r.id,k);if(d)return{img:d,name:'넣은 캡처'}}if(k==='cast'&&L.cast){const c=CAST.find(x=>x.id===L.cast);return c&&{img:c.img,name:c.name}}return null}
+function lookPick(r,k){const L=LOOK[r.id]||{};if(L[k+'Img']){const d=lkImg(r.id,k);if(d)return{img:d,name:'넣은 캡처'}}if(L[k]){const c=(k==='cast'?CAST:LOOKS).find(x=>x.id===L[k]);return c?{img:c.img,name:c.name}:null}return null}
 function lookCard(r,k,title){const P=lookPick(r,k);return `<div class="lkcard"><h5>${title}</h5>${P?`<img src="${esc(P.img)}" alt=""><p>${esc(P.name)}</p>`:'<div class="lkemp">아직 고르지 않았습니다</div>'}</div>`}
 function lookSlot(r,k){const im=!!(LOOK[r.id]||{})[k+'Img'];return `<div class="lkdz ${im?'has':''}" data-lkdrop="${k}" data-rid="${r.id}">${im?`<img src="${lkImg(r.id,k)||''}" alt="">`:''}<div><b>${im?'다른 캡처로 바꾸려면 끌어다 놓으세요':'캡처 이미지를 여기로 끌어다 놓으세요'}</b><span>마우스를 올리고 ⌘V로 붙여 넣어도 됩니다</span></div></div><div class="lkbtns"><label class="lkfile">파일 선택<input type="file" accept="image/*" data-lki="${k}" data-rid="${r.id}"></label>${im?`<button class="lkfile" data-lkxi="${k}" data-rid="${r.id}">이미지 지우기</button>`:''}</div>`}
-function lookPanel(r){const L=LOOK[r.id]||{};const P=CAST.filter(c=>c.pick),O=CAST.filter(c=>!c.pick);const tile=c=>`<button class="lkt ${L.cast===c.id&&!L.castImg?'on':''}" data-lkk="cast" data-lkv="${esc(c.id)}" data-rid="${r.id}"><img loading="lazy" src="${esc(c.img)}" alt=""><span>${esc(c.name)}</span></button>`;
+function lookPanel(r){const L=LOOK[r.id]||{};const P=CAST.filter(c=>c.pick),O=CAST.filter(c=>!c.pick);const tile=(c,k='cast')=>`<button class="lkt ${L[k]===c.id&&!L[k+'Img']?'on':''}" data-lkk="${k}" data-lkv="${esc(c.id)}" data-rid="${r.id}"><img loading="lazy" src="${esc(c.img)}" alt=""><span>${esc(c.name)}</span></button>`;
  return `<div class="lk"><div class="lksum">${lookCard(r,'cast','캐릭터')}${lookCard(r,'wear','의상')}${lookCard(r,'place','장소')}</div>
- <section><h4>캐릭터</h4><p class="lkh">캐릭터 시트에서 고르거나 캡처 이미지를 넣습니다</p><div class="lkg cast">${P.map(tile).join('')}${O.map(tile).join('')}</div>${lookSlot(r,'cast')}</section>
- <section><h4>의상 이미지</h4>${lookSlot(r,'wear')}</section>
- <section><h4>장소 이미지</h4>${lookSlot(r,'place')}</section></div>`}
+ <section><h4>캐릭터</h4><p class="lkh">캐릭터 시트에서 고르거나 캡처 이미지를 넣습니다</p><div class="lkg cast">${P.map(c=>tile(c)).join('')}${O.map(c=>tile(c)).join('')}</div>${lookSlot(r,'cast')}</section>
+ <section><h4>의상</h4><p class="lkh">의상 시트에서 고르거나 캡처 이미지를 넣습니다</p><div class="lkg cast">${LOOKS.filter(c=>c.kind==='wear').map(c=>tile(c,'wear')).join('')}</div>${lookSlot(r,'wear')}</section>
+ <section><h4>장소</h4><p class="lkh">장소 시트에서 고르거나 캡처 이미지를 넣습니다</p><div class="lkg cast">${LOOKS.filter(c=>c.kind==='place').map(c=>tile(c,'place')).join('')}</div>${lookSlot(r,'place')}</section></div>`}
 async function lkAddImage(rid,k,file){if(!file||!file.type.startsWith('image/')){alert('이미지 파일만 넣을 수 있습니다');return}let d;try{const b=await createImageBitmap(file);const m=1280,sc=Math.min(1,m/Math.max(b.width,b.height));const c=document.createElement('canvas');c.width=Math.round(b.width*sc);c.height=Math.round(b.height*sc);c.getContext('2d').drawImage(b,0,0,c.width,c.height);d=c.toDataURL('image/jpeg',.85)}catch(e){alert('이미지를 읽지 못했습니다');return}
  try{localStorage.setItem(`lookimg_${rid}_${k}`,d)}catch(e){alert('브라우저 저장 공간이 찼습니다. 다른 이미지를 지운 뒤 다시 넣어 주세요');return}
  const L=LOOK[rid]=LOOK[rid]||{};L[k+'Img']=1;saveLook();render()}
 let LKHOV=null,LKINT=false;const lkZone=t=>t&&t.closest?t.closest('[data-lkdrop]'):null;
 document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-lkk],[data-lkxi]');if(!t)return;e.preventDefault();const rid=t.dataset.rid;const L=LOOK[rid]=LOOK[rid]||{};
  if(t.dataset.lkxi){const k=t.dataset.lkxi;delete L[k+'Img'];localStorage.removeItem(`lookimg_${rid}_${k}`)}
- else{const v=t.dataset.lkv;delete L.castImg;localStorage.removeItem(`lookimg_${rid}_cast`);if(L.cast===v)delete L.cast;else L.cast=v}saveLook();render()});
+ else{const k=t.dataset.lkk,v=t.dataset.lkv;delete L[k+'Img'];localStorage.removeItem(`lookimg_${rid}_${k}`);if(L[k]===v)delete L[k];else L[k]=v}saveLook();render()});
 document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.lki;if(k&&e.target.files[0])lkAddImage(e.target.dataset.rid,k,e.target.files[0])});
 document.addEventListener('dragstart',()=>{LKINT=true},true);document.addEventListener('dragend',()=>{LKINT=false;document.body.classList.remove('lkdrag')},true);
 document.addEventListener('mousemove',e=>{if(TAB==='look')LKHOV=lkZone(e.target)||(LKHOV&&LKHOV.isConnected?LKHOV:null)});

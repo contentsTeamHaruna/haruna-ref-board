@@ -1,0 +1,114 @@
+[
+ {
+  "id": "r1_wear",
+  "kind": "wear",
+  "ref": "R1",
+  "name": "R1 회색 원피스·크림 스트라이프 셔츠",
+  "img": "의상장소/r1_wear.jpg"
+ },
+ {
+  "id": "r1_place",
+  "kind": "place",
+  "ref": "R1",
+  "name": "R1 테이블 방·대리석 욕실·미용실·복도",
+  "img": "의상장소/r1_place.jpg"
+ },
+ {
+  "id": "r2_wear",
+  "kind": "wear",
+  "ref": "R2",
+  "name": "R2 검정 V넥 탑·실버 후프",
+  "img": "의상장소/r2_wear.jpg"
+ },
+ {
+  "id": "r2_place",
+  "kind": "place",
+  "ref": "R2",
+  "name": "R2 검은 타일 욕실",
+  "img": "의상장소/r2_place.jpg"
+ },
+ {
+  "id": "r3_wear",
+  "kind": "wear",
+  "ref": "R3",
+  "name": "R3 차콜 후드집업·흰 가운",
+  "img": "의상장소/r3_wear.jpg"
+ },
+ {
+  "id": "r3_place",
+  "kind": "place",
+  "ref": "R3",
+  "name": "R3 편의점·욕실·서울 밤거리",
+  "img": "의상장소/r3_place.jpg"
+ },
+ {
+  "id": "r4_wear",
+  "kind": "wear",
+  "ref": "R4",
+  "name": "R4 회색 크롭탑·흰 홀터",
+  "img": "의상장소/r4_wear.jpg"
+ },
+ {
+  "id": "r4_place",
+  "kind": "place",
+  "ref": "R4",
+  "name": "R4 어두운 로프트",
+  "img": "의상장소/r4_place.jpg"
+ },
+ {
+  "id": "r5_wear",
+  "kind": "wear",
+  "ref": "R5",
+  "name": "R5 브라운 울 점퍼·에크루 팬츠",
+  "img": "의상장소/r5_wear.jpg"
+ },
+ {
+  "id": "r5_place",
+  "kind": "place",
+  "ref": "R5",
+  "name": "R5 유럽 광장·돌길 거리",
+  "img": "의상장소/r5_place.jpg"
+ },
+ {
+  "id": "r6_wear",
+  "kind": "wear",
+  "ref": "R6",
+  "name": "R6 핑크 가운·헤어 타월",
+  "img": "의상장소/r6_wear.jpg"
+ },
+ {
+  "id": "r6_place",
+  "kind": "place",
+  "ref": "R6",
+  "name": "R6 꽃무늬 벽지 욕실",
+  "img": "의상장소/r6_place.jpg"
+ },
+ {
+  "id": "r7_wear",
+  "kind": "wear",
+  "ref": "R7",
+  "name": "R7 하늘색 파자마·누드 슬립",
+  "img": "의상장소/r7_wear.jpg"
+ },
+ {
+  "id": "r7_place",
+  "kind": "place",
+  "ref": "R7",
+  "name": "R7 어두운 문가·침실",
+  "img": "의상장소/r7_place.jpg"
+ },
+ {
+  "id": "r8_wear",
+  "kind": "wear",
+  "ref": "R8",
+  "name": "R8 검정 홀터·흰 워치",
+  "img": "의상장소/r8_wear.jpg"
+ },
+ {
+  "id": "r8_place",
+  "kind": "place",
+  "ref": "R8",
+  "name": "R8 크림 패널 방",
+  "img": "의상장소/r8_place.jpg"
+ }
+]
