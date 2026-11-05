@@ -376,6 +376,10 @@ button[data-cplay]{background:var(--acc)!important;color:#fff!important;box-shad
 .fbspin{width:20px;height:20px;border-radius:50%;border:2.5px solid #e5e5ea;border-top-color:var(--acc);animation:fbs 1s linear infinite}
 @keyframes fbs{to{transform:rotate(360deg)}}
 .hzb{background:#0a7d3c!important;color:#fff!important;top:auto!important;bottom:22px}.hzh{margin:4px 0 8px;font-size:13px}.hzv{margin-bottom:18px}
+.lk section{margin:26px 0 0}.lk h4{margin:0 0 3px;font-size:14px}.lkh{margin:0 0 10px;color:var(--mut,#777);font-size:12px}
+.lksum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.lkcard{background:rgba(0,0,0,.035);border-radius:10px;padding:10px 12px;min-height:150px}.lkcard h5{margin:0 0 8px;font-size:12px;color:var(--mut,#777);font-weight:600}.lkcard img{display:block;max-width:100%;max-height:220px;border-radius:6px}.lkcard p{margin:6px 0 0;font-size:12px}.lkemp{font-size:12px;color:var(--mut,#888)}.lklink a{display:inline-block;margin-top:6px;font-size:12px}
+.lkg{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}.lkg.cast{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}.lkt{border:0;background:none;padding:0;cursor:pointer;text-align:left;font:inherit;color:inherit;min-width:0}.lkt img{display:block;width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:6px;outline:2px solid transparent;outline-offset:1px;background:#ddd}.lkg.cast .lkt img{aspect-ratio:3/2;object-fit:cover}.lkt span{display:block;font-size:11px;margin-top:3px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.lkt.on img{outline-color:var(--accent,#0a84ff)}.lkt.on span{font-weight:600}
+.lkurl{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:12px;white-space:nowrap}.lkurl input{flex:1;min-width:0;border:1px solid var(--line,#ddd);border-radius:6px;padding:5px 8px;font:inherit;background:#fff;color:var(--ink,#111)}.lkurl button{border:0;background:rgba(0,0,0,.06);border-radius:6px;padding:4px 8px;font:inherit;cursor:pointer}
 </style>
 </head>
 <body>
@@ -472,7 +476,7 @@ function playDraft(rid){const S=seq(rid);if(!S.length){alert('컷이 고른 줄�
   const tot=S.reduce((a,b)=>a+b.dur,0);pv.querySelector('.tot').textContent=`${S.length}컷 · ${tot.toFixed(1)}초`;
   const go=i=>{clearTimeout(PV&&PV.t);if(i>=S.length){PV={i:S.length};return}const x=S[i];const pzok=CLIP[x.cut].previz;const cc=CLIP[x.cut];if(PVM==='hz'&&cc.hz){v.style.objectPosition='';v.src=`구도/hz/${x.cut}.mp4`;v.currentTime=0}else if(cc.src==='batch'){const u=`전처리/batch/${cc.fb}.mp4`;v.style.objectPosition=PVM!=='ed'?'100% 0':'0 0';if(!v.src.endsWith(encodeURI(u)))v.src=u;const seek=()=>{v.currentTime=cc.start};if(v.readyState>0)seek();else v.addEventListener('loadedmetadata',seek,{once:true})}else{v.style.objectPosition='';v.src=PVM!=='ed'&&pzok?`구도/previz/${x.cut}.mp4`:`구도/clips/${x.cut}.mp4`;v.currentTime=0}v.play().catch(()=>{});cap.textContent=PVM==='hz'?`C${String(i+1).padStart(2,'0')} ${x.cut}${cc.hz?' 하루나 제품':' 기존 프리비즈'}`:PVM==='pz'?`C${String(i+1).padStart(2,'0')} ${x.cut}${pzok?'':' 원본'}`:x.tx;sd.querySelectorAll('div').forEach((d,j)=>d.classList.toggle('on',j===i));PV={i,go,t:setTimeout(()=>go(i+1),x.dur*1000)}};go(0)}
 function closePV(){const pv=document.getElementById('pv');clearTimeout(PV&&PV.t);pv.querySelector('video').pause();pv.style.display='none'}
-function saveEdit(rid){const r=R.find(x=>x.id===rid);const S=seq(rid);if(!S.length){alert('컷을 고른 줄이 없습니다');return}const o={ref_id:rid,ref_n:r.n,who:r.who,hook:r.hook,prod:r.prod,cat:r.cat,src:r.srcn,start:r.start,days:r.days,ad_url:`https://www.facebook.com/ads/library/?id=${rid}`,made:new Date().toISOString(),rows:S};const b=new Blob([JSON.stringify(o,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const cl=s=>String(s||'').replace(/ 페이지는.*$/,'').replace(/[\\/:*?"<>|\n\r#%“”‘’「」『』'\u2018\u2019]+/g,' ').replace(/\s+/g,' ').trim();const dt=new Date();const ymd=`${String(dt.getFullYear()).slice(2)}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}_${String(dt.getHours()).padStart(2,'0')}${String(dt.getMinutes()).padStart(2,'0')}`;a.download=`초안편집_${r.n}_${cl(r.prod)}_${cl(r.who).slice(0,24)}_${cl(r.hook).slice(0,20)}_${ymd}.json`;a.click()}
+function saveEdit(rid){const r=R.find(x=>x.id===rid);const S=seq(rid);if(!S.length){alert('컷을 고른 줄이 없습니다');return}const o={ref_id:rid,ref_n:r.n,who:r.who,hook:r.hook,prod:r.prod,cat:r.cat,src:r.srcn,start:r.start,days:r.days,ad_url:`https://www.facebook.com/ads/library/?id=${rid}`,look:LOOK[rid]||{},made:new Date().toISOString(),rows:S};const b=new Blob([JSON.stringify(o,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(b);const cl=s=>String(s||'').replace(/ 페이지는.*$/,'').replace(/[\\/:*?"<>|\n\r#%“”‘’「」『』'\u2018\u2019]+/g,' ').replace(/\s+/g,' ').trim();const dt=new Date();const ymd=`${String(dt.getFullYear()).slice(2)}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}_${String(dt.getHours()).padStart(2,'0')}${String(dt.getMinutes()).padStart(2,'0')}`;a.download=`초안편집_${r.n}_${cl(r.prod)}_${cl(r.who).slice(0,24)}_${cl(r.hook).slice(0,20)}_${ymd}.json`;a.click()}
 
 function fbName(r,ext){const cl=s=>String(s||'').replace(/ 페이지는.*$/,'').replace(/[\\/:*?"<>|\n\r#%“”‘’「」『』']+/g,' ').replace(/\s+/g,' ').trim();const dt=new Date();const ymd=`${String(dt.getFullYear()).slice(2)}${String(dt.getMonth()+1).padStart(2,'0')}${String(dt.getDate()).padStart(2,'0')}_${String(dt.getHours()).padStart(2,'0')}${String(dt.getMinutes()).padStart(2,'0')}`;return `피드백요청${FBHZ?'_하루나제품':''}_${r.n}_${cl(r.prod)}_${cl(r.who).slice(0,24)}_${cl(r.hook).slice(0,20)}_${ymd}.${ext}`}
 function wrapLines(ctx,text,maxW){const out=[];String(text||'').split('\n').forEach(par=>{let line='';[...par].forEach(ch=>{const tl=line+ch;if(ctx.measureText(tl).width>maxW&&line){out.push(line);line=ch.trimStart()}else line=tl});if(line)out.push(line)});return out}
@@ -598,7 +602,170 @@ function rowItem(r){const s=st[r.id]||'';return `<div class="it ${SEL===r.id?'se
  <div class="tx"><div class="t0">${srcLine(r,1)}</div><div class="t1"><b>${esc(r.who.replace(/ 페이지는.*$/,''))}</b><small>${esc(String(r.n))}</small></div>
  <div class="t2">${hl(r.hook)}</div>
  <div class="t3"><span class="chipm">${esc(r.kind)}</span><span class="chipm">${esc(r.cat)}</span>${r.pre||r.pb?'<span class="chipm k">전처리</span>':''}${s==='1'||s==='2'?`<span class="chipm">${s}번 채택</span>`:''}</div></div></div>`}
-function tabsFor(r){const T=[['ref','레퍼런스'],['cmp','구성 편집']];if(r.pre||r.pb)T.push(['pre','전처리']);return T}
+const CAST=[
+ {
+  "id": "soa_long",
+  "name": "소아 긴머리",
+  "src": "어제 테스트 모델",
+  "img": "캐스트/soa_long.jpg",
+  "pick": 1
+ },
+ {
+  "id": "seori",
+  "name": "서리",
+  "src": "VU 등록 시트",
+  "img": "캐스트/seori.jpg",
+  "pick": 1
+ },
+ {
+  "id": "daon",
+  "name": "다온",
+  "src": "VU 등록 시트",
+  "img": "캐스트/daon.jpg",
+  "pick": 1
+ },
+ {
+  "id": "a3",
+  "name": "지아",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/a3.jpg",
+  "pick": 1
+ },
+ {
+  "id": "p09",
+  "name": "P09 스킨케어",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p09.jpg",
+  "pick": 1
+ },
+ {
+  "id": "p53",
+  "name": "P53 히메컷",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p53.jpg",
+  "pick": 1
+ },
+ {
+  "id": "sein",
+  "name": "세인",
+  "src": "VU 등록 시트",
+  "img": "캐스트/sein.jpg",
+  "pick": 0
+ },
+ {
+  "id": "b4",
+  "name": "소아 단발",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/b4.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p05",
+  "name": "P05 글램",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p05.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p06",
+  "name": "P06 메이크업",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p06.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p08",
+  "name": "P08 블러셔",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p08.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p13",
+  "name": "P13 아웃도어",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p13.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p15",
+  "name": "P15 리뷰어",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p15.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p16",
+  "name": "P16 리액션",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p16.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p17",
+  "name": "P17 여행",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p17.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p25",
+  "name": "P25 자전거",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p25.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p45",
+  "name": "P45 미니멀",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p45.jpg",
+  "pick": 0
+ },
+ {
+  "id": "p24",
+  "name": "P24 쿨톤",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/p24.jpg",
+  "pick": 0
+ },
+ {
+  "id": "f01",
+  "name": "F01 성수스트릿",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/f01.jpg",
+  "pick": 0
+ },
+ {
+  "id": "s08",
+  "name": "S08 차안토크",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/s08.jpg",
+  "pick": 0
+ },
+ {
+  "id": "s11",
+  "name": "S11 와인레드",
+  "src": "맨얼굴 3뷰",
+  "img": "캐스트/s11.jpg",
+  "pick": 0
+ }
+];const LOOKK='look261105';let LOOK=JSON.parse(localStorage.getItem(LOOKK)||'{}');
+function saveLook(){localStorage.setItem(LOOKK,JSON.stringify(LOOK))}
+function lookClips(r){const mine=REFOF[r.id]||r.id;const own=LIB.clips.filter(c=>c.ref===mine).sort((a,b)=>a.start-b.start);const used=(CM[r.id]||[]).map(p=>CLIP[p.cut]).filter(c=>c&&c.ref!==mine);return own.concat(used.filter((c,i)=>used.indexOf(c)===i))}
+function lookPick(r,k){const L=LOOK[r.id]||{};if(L[k+'Url'])return{url:L[k+'Url']};if(!L[k])return null;if(k==='cast'){const c=CAST.find(x=>x.id===L[k]);return c&&{img:c.img,name:c.name}}if(L[k]==='ref')return{img:r.img,name:'레퍼 대표 이미지'};const c=CLIP[L[k]];return c&&{img:`구도/thumbs/${c.id}.jpg`,name:`${c.id} · ${c.start.toFixed(1)}초`}}
+function lookCard(r,k,title){const P=lookPick(r,k);let m='<div class="lkemp">아직 고르지 않았습니다</div>';if(P&&P.url){const u=esc(P.url);m=`<div class="lklink"><img src="${u}" alt="" onerror="this.remove()"><a href="${u}" target="_blank" rel="noopener">외부 링크 열기</a></div>`}else if(P)m=`<img src="${esc(P.img)}" alt=""><p>${esc(P.name)}</p>`;return `<div class="lkcard"><h5>${title}</h5>${m}</div>`}
+function lookUrl(r,k,ph){const v=(LOOK[r.id]||{})[k+'Url']||'';return `<label class="lkurl">다른 레퍼런스 링크<input type="url" data-lku="${k}" data-rid="${r.id}" value="${esc(v)}" placeholder="${ph}">${v?`<button data-lkx="${k}" data-rid="${r.id}">링크 지우기</button>`:''}</label>`}
+function lookPanel(r){const L=LOOK[r.id]||{};const CL=lookClips(r);const tile=(k,v,img,cap)=>`<button class="lkt ${L[k]===v&&!L[k+'Url']?'on':''}" data-lkk="${k}" data-lkv="${esc(v)}" data-rid="${r.id}"><img loading="lazy" src="${esc(img)}" alt=""><span>${esc(cap)}</span></button>`;
+ const frames=k=>CL.length?CL.map(c=>tile(k,c.id,`구도/thumbs/${c.id}.jpg`,`${c.id} ${c.start.toFixed(1)}초`)).join(''):(r.img?tile(k,'ref',r.img,'레퍼 대표 이미지'):'<div class="lkemp">고를 장면이 없습니다. 링크를 넣어 주세요</div>');
+ const P=CAST.filter(c=>c.pick),O=CAST.filter(c=>!c.pick);const cg=A=>A.map(c=>tile('cast',c.id,c.img,c.name)).join('');
+ return `<div class="lk"><div class="lksum">${lookCard(r,'cast','캐릭터')}${lookCard(r,'wear','의상')}${lookCard(r,'place','장소')}</div>
+ <section><h4>캐릭터 시트</h4><p class="lkh">하루나 캐스트 ${CAST.length}명에서 고릅니다. 앞쪽 ${P.length}명은 힉스필드 등록 후보입니다</p><div class="lkg cast">${cg(P)}${cg(O)}</div>${lookUrl(r,'cast','다른 인물 이미지 또는 게시물 주소')}</section>
+ <section><h4>레퍼런스 의상</h4><p class="lkh">이 레퍼의 장면에서 의상이 잘 보이는 컷을 고릅니다</p><div class="lkg">${frames('wear')}</div>${lookUrl(r,'wear','다른 의상 이미지 또는 게시물 주소')}</section>
+ <section><h4>레퍼런스 장소</h4><p class="lkh">이 레퍼의 장면에서 배경이 잘 보이는 컷을 고릅니다</p><div class="lkg">${frames('place')}</div>${lookUrl(r,'place','다른 장소 이미지 또는 게시물 주소')}</section></div>`}
+document.addEventListener('click',e=>{const t=e.target.closest&&e.target.closest('[data-lkk],[data-lkx]');if(!t)return;const rid=t.dataset.rid;const L=LOOK[rid]=LOOK[rid]||{};if(t.dataset.lkx){delete L[t.dataset.lkx+'Url']}else{const k=t.dataset.lkk,v=t.dataset.lkv;delete L[k+'Url'];if(L[k]===v)delete L[k];else L[k]=v}saveLook();render()});
+document.addEventListener('change',e=>{const k=e.target.dataset&&e.target.dataset.lku;if(!k)return;const rid=e.target.dataset.rid;const L=LOOK[rid]=LOOK[rid]||{};const v=e.target.value.trim();if(v)L[k+'Url']=v;else delete L[k+'Url'];saveLook();render()});
+function tabsFor(r){const T=[['ref','레퍼런스'],['cmp','구성 편집'],['look','캐릭터·의상·장소']];if(r.pre||r.pb)T.push(['pre','전처리']);return T}
 function detail(r){if(!r)return '<div class="empty">왼쪽 목록에서 레퍼를 고르세요</div>';const s=st[r.id]||'';
  const T=tabsFor(r);if(!T.some(x=>x[0]===TAB))TAB='ref';
  const bar=`<div class="dbar"><button class="tbtn nav" data-nav="-1" title="이전 (↑)">‹</button><button class="tbtn nav" data-nav="1" title="다음 (↓)">›</button>
@@ -615,6 +782,7 @@ function detail(r){if(!r)return '<div class="empty">왼쪽 목록에서 레퍼�
  else if(TAB==='ref')body=`<div class="grp">${r.struct?`<h4>레퍼 구조</h4><div class="bd0">${hl(r.struct)}</div>`:''}
   ${r.tr?`<details><summary>음성 전사</summary><pre>${hl(r.tr)}</pre></details>`:''}<details ${r.tr?'':'open'}><summary>광고 본문 원문</summary><pre>${hl(r.body)}</pre></details>${r.point?`<details><summary>미러링 포인트</summary><pre>${hl(r.point)}</pre></details>`:''}</div>`;
  else if(TAB==='cmp')body=cmpPanel(r);
+ else if(TAB==='look')body=lookPanel(r);
  else if(TAB==='pre')body=hzBlock(r)+(r.pre?preBlock(r.pre):pbBlock(r.pb));
  return bar+`<article id="r${r.n}">`+(TAB==='ref'?head:'')+`<div class="sec"${TAB==='ref'?'':' style="padding-top:22px"'}>${TAB==='ref'?opHtml(r,0):''}${body}</div></article>`}
 function curList(){const L=R.filter(pass);const k=F.sort||'';const D=r=>parseInt(r.days)||0,V=r=>parseInt((r.var||'').replace(/\D/g,''))||0,E=r=>parseFloat(String(r.eng||'').replace(/[^\d.]/g,''))||-1;
